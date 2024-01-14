@@ -1,26 +1,23 @@
 local HttpService = game:GetService("HttpService")
 
-local Headers = {
-	["Authorization"] = "Bearer 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"
-}
 
 
 
-local UpstreamCommits = HttpService:JSONDecode(HttpService:GetAsync("https://api.github.com/repos/CreonC/BlackoutLoader/commits",false,Headers))
+local UpstreamCommits = HttpService:JSONDecode(HttpService:GetAsync("https://api.github.com/repos/CreonC/BlackoutLoader/commits",false))
 
 local commitToClone = UpstreamCommits[1]
 
-local Lastestcommits = HttpService:JSONDecode(HttpService:GetAsync("https://api.github.com/repos/CreonC/BlackoutLoader/commits/"..tostring(commitToClone.sha),false,Headers))
+local Lastestcommits = HttpService:JSONDecode(HttpService:GetAsync("https://api.github.com/repos/CreonC/BlackoutLoader/commits/"..tostring(commitToClone.sha),false))
 
 print(string.format("Got lastest commit sha: %s",string.sub(tostring(Lastestcommits.sha), 1, 7)))
 
-local ClientLoaderFile = HttpService:JSONDecode(HttpService:GetAsync("https://api.github.com/repos/CreonC/BlackoutLoader/contents/Client.lua",true,Headers))
+local ClientLoaderFile = HttpService:JSONDecode(HttpService:GetAsync("https://api.github.com/repos/CreonC/BlackoutLoader/contents/Client.lua",true))
 
 local ClientLoaderDownloadLink = ClientLoaderFile.download_url
 
 print("Got client download url, download client now...")
 
-local ClientLoaderFile2 = HttpService:GetAsync(ClientLoaderDownloadLink,true,Headers)
+local ClientLoaderFile2 = HttpService:GetAsync(ClientLoaderDownloadLink,true)
 
 
 local OldClientLoader = game.ReplicatedFirst.ProjectLoader
@@ -36,11 +33,11 @@ else
 end
 print("Getting Server download url...")
 
-local ServerLoaderFile = HttpService:JSONDecode(HttpService:GetAsync("https://api.github.com/repos/CreonC/BlackoutLoader/contents/Server.lua",true,Headers))
+local ServerLoaderFile = HttpService:JSONDecode(HttpService:GetAsync("https://api.github.com/repos/CreonC/BlackoutLoader/contents/Server.lua",true))
 
 local ServerLoaderDownloadLink = ServerLoaderFile.download_url
 
-local ServerLoaderFile2 = HttpService:GetAsync(ServerLoaderDownloadLink,true,Headers)
+local ServerLoaderFile2 = HttpService:GetAsync(ServerLoaderDownloadLink,true)
 
 local OldServerLoader = game.ServerScriptService.ProjectLoader_Server
 
