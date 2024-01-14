@@ -26,7 +26,14 @@ if OldClientLoader.ClientGithash.Value == string.sub(tostring(Lastestcommits.sha
 	warn("ClientLoader already at the lastest commit, no changes.")
 else
 	print("Writing script.source Now")
-	OldClientLoader.Source = ClientLoaderFile2
+
+	if OldClientLoader.Source = ClientLoaderFile2 then
+		warn("ClientLoader source is the same as the new one, no changes.")
+	else
+		OldClientLoader.Source = ClientLoaderFile2
+	end
+
+	
 	print("Done, Writting hash now")
 	OldClientLoader.ClientGithash.Value = string.sub(tostring(Lastestcommits.sha), 1, 7)
 	print("Done.")
@@ -45,7 +52,13 @@ if OldServerLoader.ServergitHash.Value == string.sub(tostring(Lastestcommits.sha
 	warn("ServerLoader already at the lastest commit, no changes.")
 else
 	print("Writing script.source Now")
-	OldServerLoader.Source = ServerLoaderFile2
+
+	if OldServerLoader.Source = ServerLoaderFile2 then
+		warn("ServerLoader source is the same as the new one, no changes.")
+	else
+		OldServerLoader.Source = ServerLoaderFile2
+	end
+	
 	print("Done, Writting hash now")
 	OldServerLoader.ServergitHash.Value = string.sub(tostring(Lastestcommits.sha), 1, 7)
 	print("Done.")
