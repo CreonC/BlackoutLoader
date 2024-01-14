@@ -25,7 +25,7 @@ local ClientLoaderFile2 = HttpService:GetAsync(ClientLoaderDownloadLink,true,Hea
 
 local OldClientLoader = game.ReplicatedFirst.ProjectLoader
 
-if OldClientLoader.ServergitHash == string.sub(tostring(Lastestcommits.sha), 1, 7) then
+if OldClientLoader.ClientGithash == string.sub(tostring(Lastestcommits.sha), 1, 7) then
 	warn("ClientLoader already at the lastest commit, no changes.")
 else
 	print("Writing script.source Now")
