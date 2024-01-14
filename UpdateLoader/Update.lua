@@ -1,6 +1,5 @@
+print("Starting update...")
 local HttpService = game:GetService("HttpService")
-
-
 
 
 local UpstreamCommits = HttpService:JSONDecode(HttpService:GetAsync("https://api.github.com/repos/CreonC/BlackoutLoader/commits",false))
