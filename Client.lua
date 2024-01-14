@@ -2,7 +2,7 @@
 print("BlackoutLoader_Client v1.1, git hash "..script.ClientGithash.Value)
 
 
-local AllowDebugScripts = false
+local AllowDebugScripts
 
 
 local ProjectConfiguration = game.ReplicatedFirst:WaitForChild("ProjectConfiguration")
