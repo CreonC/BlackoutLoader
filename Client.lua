@@ -1,3 +1,4 @@
+--CHANGE THIS SCRIPT IN VSC,NOT ROBLOX
 print("BlackoutLoader_Client v1.1, git hash "..script.ClientGithash.Value)
 
 
