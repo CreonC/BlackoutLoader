@@ -119,4 +119,4 @@ end)
 local loadtime = tostring(string.format("%.2f", (os.clock() - BeginLoadTime) * 1000))
 debuglog:log(string.format("Finish client startup. Took %s MS",loadtime),debug.info(1, 'l'),script.Name)
 
-FrameWork:PrintConfig()
+
