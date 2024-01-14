@@ -1,4 +1,4 @@
-print("BlackoutLoader_Server v1.1, git hash "..script.ServergitHash)
+print("BlackoutLoader_Server v1.1, git hash "..script.ServergitHash.Value)
 local BeginLoadTime = os.clock()
 for _,rscript in pairs(script.scripts:GetChildren()) do
 	if rscript:IsA("ModuleScript") then
