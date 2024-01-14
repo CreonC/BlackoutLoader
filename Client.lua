@@ -16,7 +16,7 @@ FrameWork:WriteConfig("DoneInit",false)
 
 if not ProjectConfiguration then
 	warn(debug.traceback("Traceback:"))
-	error("[BlackoutLoader]: ProjectConfiguration is nil. not loading game.") 
+	error("[BlackoutLoader]: ProjectConfiguration is nil. Not loading game.") 
 end
 
 if CurrentRelease == "debug" then
@@ -25,7 +25,7 @@ if CurrentRelease == "debug" then
 elseif CurrentRelease == "prod" then
 	print("[BlackoutLoader]: prod")
 else
-	error("[BlackoutLoader]: CurrentRelease string is invaild. not loading game")
+	error("[BlackoutLoader]: CurrentRelease string is invaild. Not loading game")
 end
 
 if CurrentRelease == "debug" and not RunService:IsStudio() then --who wants a debug envirement in a prod game????
