@@ -1,4 +1,4 @@
-print("BlackoutLoader_Client v1.1, git hash 8e770ea")
+print("BlackoutLoader_Client v1.1, git hash "..script.Githash)
 
 
 local AllowDebugScripts = false
