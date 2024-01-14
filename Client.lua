@@ -53,7 +53,7 @@ task.defer(function()
 		isInternalText = ""
 	end
 	
-	DebugVersionInfo.Text = string.format("build%s-%s-client-2.6.1 PREVIEW 1 %s",game.PlaceVersion,CurrentRelease,isInternalText)
+	DebugVersionInfo.Text = string.format("build%s-%s-client-%s PREVIEW 1 %s",game.PlaceVersion,CurrentRelease,FrameWork:GetLoaderGithash(),isInternalText)
 
 end)
 
