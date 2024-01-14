@@ -2,7 +2,7 @@
 
 ## todo: type something about this project lol
 
-### Update loader (hard coded, don't run it lmao):
+### Update loader (Paste this into the command bar):
 ```lua
 
 
