@@ -8,10 +8,11 @@
 
 
 local Downloadurl = game.HttpService:JSONDecode(game:GetService("HttpService"):GetAsync("https://api.github.com/repos/CreonC/BlackoutLoader/contents/UpdateLoader/Update.lua",true))
-local Downloadurl = Downloadurl.download_url
 assert(Downloadurl,"Downloadurl is nil!")
+local Downloadurl2 = Downloadurl.download_url
+assert(Downloadurl2,"Downloadurl2 is nil!")
 print("Phase 1: Downloading Update.lua")
-local src = game:GetService("HttpService"):GetAsync(Downloadurl,true) 
+local src = game:GetService("HttpService"):GetAsync(Downloadurl2,true) 
 print("Phase 2: loadstring Update.lua")
 assert(src,"src is nil!")
 local Source = loadstring(src)
