@@ -83,8 +83,9 @@ task.spawn(function()
 	end
 end)
 
+
 repeat task.wait()
-	
+
 until game.Players.LocalPlayer.Character
 
 local BeginLoadTime = os.clock()
@@ -96,9 +97,7 @@ for _,rscript in pairs(script.scripts:GetChildren()) do
 		end
 		FrameWork:WriteConfig("CurrentLoadingScript",rscript.Name)
 		debuglog:debuglog("running script "..rscript.Name,debug.info(1, 'l'),script.Name)
-		task.defer(function()
-			require(rscript)
-		end)
+		require(rscript)
 		--rscript.Parent = LoadedScriptsLocation
 		if AllowDebugScripts then
 			DebugClient:ScriptLoaded(rscript.Name,rscript:GetFullName())
