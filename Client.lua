@@ -83,6 +83,10 @@ task.spawn(function()
 	end
 end)
 
+repeat task.wait()
+	
+until game.Players.LocalPlayer.Character
+
 local BeginLoadTime = os.clock()
 for _,rscript in pairs(script.scripts:GetChildren()) do
 	
