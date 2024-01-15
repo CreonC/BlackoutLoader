@@ -10,3 +10,9 @@ end
 
 local loadtime = tostring(string.format("%.2f", (os.clock() - BeginLoadTime) * 1000))
 print(string.format("Finish server startup. Took %s MS",loadtime))
+
+game.ReplicatedStorage.Events.Client.ClientfinishInit.OnServerEvent:Connect(function(Player,ClientGitHash)
+	if ClientGitHash ~= script.ServergitHash.Value then
+		warn(string.format("Player %s's client hash is different! (%s vs %s)",Player.Name,ClientGitHash,script.ServergitHash.Value))
+	end
+end)
