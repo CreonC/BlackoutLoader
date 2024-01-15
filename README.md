@@ -1,6 +1,6 @@
 # Blackout Games Project Loader (BlackoutLoader)
 
-## todo: type something about this project lol
+## A not very useful framework used in [games](https://www.roblox.com/games/15845364874/testv4)
 
 ### Update loader (Paste this into the command bar):
 ```lua
