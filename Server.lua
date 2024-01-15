@@ -15,7 +15,7 @@ game.ReplicatedStorage.Events.Client.ClientfinishInit.OnServerEvent:Connect(func
 	if ClientGitHash ~= script.ServergitHash.Value then
 		warn(string.format("Player %s's client hash is different! (%s vs %s)",Player.Name,ClientGitHash,script.ServergitHash.Value))
 	end
-
+	local LoadTime = tonumber(LoadTime) -- fix attempt to compare string < number 
 	if LoadTime < 600 then 
 		print("Player have good pc")
 	elseif LoadTime < 1500 then
