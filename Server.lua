@@ -11,8 +11,16 @@ end
 local loadtime = tostring(string.format("%.2f", (os.clock() - BeginLoadTime) * 1000))
 print(string.format("Finish server startup. Took %s MS",loadtime))
 
-game.ReplicatedStorage.Events.Client.ClientfinishInit.OnServerEvent:Connect(function(Player,ClientGitHash)
+game.ReplicatedStorage.Events.Client.ClientfinishInit.OnServerEvent:Connect(function(Player,ClientGitHash,LoadTime:number) --loadtime in ms
 	if ClientGitHash ~= script.ServergitHash.Value then
 		warn(string.format("Player %s's client hash is different! (%s vs %s)",Player.Name,ClientGitHash,script.ServergitHash.Value))
+	end
+
+	if LoadTime < 600 then 
+		print("Player have good pc")
+	elseif LoadTime < 1500 then
+		print("Player have mid pc")
+	else
+		print("Player have bad pc") --by the ai lmao
 	end
 end)
