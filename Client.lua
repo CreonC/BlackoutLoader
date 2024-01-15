@@ -92,7 +92,9 @@ for _,rscript in pairs(script.scripts:GetChildren()) do
 		end
 		FrameWork:WriteConfig("CurrentLoadingScript",rscript.Name)
 		debuglog:debuglog("running script "..rscript.Name,debug.info(1, 'l'),script.Name)
-		require(rscript)
+		task.defer(function()
+			require(rscript)
+		end)
 		--rscript.Parent = LoadedScriptsLocation
 		if AllowDebugScripts then
 			DebugClient:ScriptLoaded(rscript.Name,rscript:GetFullName())
