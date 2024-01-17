@@ -100,7 +100,7 @@ for _,rscript in pairs(script.scripts:GetChildren()) do
 		local ScriptStartupTime = os.clock()
 		require(rscript)
 		local ScriptLoadTime = tostring(string.format("%.2f", (os.clock() - ScriptStartupTime) * 1000))
-		debuglog:debuglog(string.format("Script %s took %sMS to startup.", rscript.Name, tostring(ScriptLoadTime)))
+		debuglog:debuglog(string.format("Script %s took %sMS to startup.", rscript.Name, tostring(ScriptLoadTime)),debug.info(1, 'l'),script.Name)
 		--rscript.Parent = LoadedScriptsLocation
 		if AllowDebugScripts then
 			DebugClient:ScriptLoaded(rscript.Name,rscript:GetFullName())
