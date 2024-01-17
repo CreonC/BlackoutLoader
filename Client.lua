@@ -11,6 +11,8 @@ local RunService = game:GetService("RunService")
 local CurrentRelease = ProjectConfiguration:GetAttribute("Release")
 local FrameWork = require(script.BlackoutFramework)
 
+local ScriptStartupTimes = {}
+
 FrameWork:WriteConfig("DoneInit",false)
 
 
@@ -42,17 +44,17 @@ local debuglog = require(script.modules.debuglog)
 
 task.defer(function()
 	local DebugVersionInfo = game.Players.LocalPlayer.PlayerGui:WaitForChild("Main"):WaitForChild("DebugVersionInfo")
-	
+
 	local IsInternal = RunService:IsStudio()
-	
+
 	local isInternalText 
-	
+
 	if IsInternal then
 		isInternalText = "INTERNAL BUILD"
 	else
 		isInternalText = ""
 	end
-	
+
 	DebugVersionInfo.Text = string.format("build%s-%s-client-%s %s",game.PlaceVersion,CurrentRelease,FrameWork:GetLoaderGithash(),isInternalText)
 
 end)
@@ -90,7 +92,7 @@ until game.Players.LocalPlayer.Character
 
 local BeginLoadTime = os.clock()
 for _,rscript in pairs(script.scripts:GetChildren()) do
-	
+
 	if rscript:IsA("ModuleScript") and not rscript:GetAttribute("Debug") then
 		if AllowDebugScripts then
 			DebugClient:ScriptLoading(rscript.Name)
@@ -100,14 +102,13 @@ for _,rscript in pairs(script.scripts:GetChildren()) do
 		local ScriptStartupTime = os.clock()
 		require(rscript)
 		local ScriptLoadTime = tostring(string.format("%.2f", (os.clock() - ScriptStartupTime) * 1000))
-		debuglog:debuglog(string.format("Script %s took %sMS to startup.", rscript.Name, tostring(ScriptLoadTime)),debug.info(1, 'l'),script.Name)
-		--rscript.Parent = LoadedScriptsLocation
+		ScriptStartupTimes[rscript.Name] = ScriptLoadTime
 		if AllowDebugScripts then
 			DebugClient:ScriptLoaded(rscript.Name,rscript:GetFullName())
 		end
 		FrameWork:WriteConfig("CurrentLoadingScript",nil)
 	end
-	
+
 end
 FrameWork:WriteConfig("AreScriptsDoneLoading",true)
 
@@ -126,6 +127,23 @@ end)
 
 
 local loadtime = tostring(string.format("%.2f", (os.clock() - BeginLoadTime) * 1000))
+
+
+local sortedScripts = {}
+
+for scriptName, startupTime in pairs(ScriptStartupTimes) do
+	table.insert(sortedScripts, {Name = scriptName, Time = tonumber(startupTime)})
+end
+table.sort(sortedScripts, function(a, b)
+	return a.Time > b.Time
+end)
+
+debuglog:debuglog(string.format("Listing Scripts with the biggest startup time:"),debug.info(1, 'l'),script.Name)
+debuglog:debuglog(string.format("-----------------------SCRIPT_TIMINGS-----------------------"),debug.info(1, 'l'),script.Name)
+for _, scriptData in ipairs(sortedScripts) do
+	debuglog:debuglog(string.format("| Script '%s' took %s MS to start up", scriptData.Name, scriptData.Time),debug.info(1, 'l'),script.Name)
+end
+debuglog:debuglog(string.format("-----------------------SCRIPT_TIMINGS_END-----------------------"),debug.info(1, 'l'),script.Name)
 debuglog:log(string.format("Finish client startup. Took %s MS",loadtime),debug.info(1, 'l'),script.Name)
 
 game.ReplicatedStorage.Events.Client.ClientfinishInit:FireServer(FrameWork:GetLoaderGithash(),loadtime)
