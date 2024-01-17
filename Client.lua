@@ -91,6 +91,7 @@ repeat task.wait()
 until game.Players.LocalPlayer.Character
 
 local BeginLoadTime = os.clock()
+debug.profilebegin("ClientStartup")
 for _,rscript in pairs(script.scripts:GetChildren()) do
 
 	if rscript:IsA("ModuleScript") and not rscript:GetAttribute("Debug") then
@@ -110,6 +111,7 @@ for _,rscript in pairs(script.scripts:GetChildren()) do
 	end
 
 end
+debug.profileend()
 FrameWork:WriteConfig("AreScriptsDoneLoading",true)
 
 task.defer(function()
@@ -149,3 +151,26 @@ debuglog:debuglog(string.format("-----------------------SCRIPT_TIMINGS_END------
 
 game.ReplicatedStorage.Events.Client.ClientfinishInit:FireServer(FrameWork:GetLoaderGithash(),loadtime)
 
+
+game.OnClose = function()
+	debuglog:debuglog(string.format("Client shutting down..."),debug.info(1, 'l'),script.Name)
+	
+	for _,rscript in pairs(script.scripts:GetChildren()) do
+
+		if rscript:IsA("ModuleScript") and not rscript:GetAttribute("Debug") then
+			
+			debuglog:debuglog("Shutting down "..rscript.Name,debug.info(1, 'l'),script.Name)
+			local Require = require(rscript)
+			local success ,err = pcall(function()
+				Require:ClientShutDown()
+			end)
+			if not success then
+				debuglog:log(string.format("Warning: Script %s failed to shutdown. This could be an internal error, or the script didn't implement ClientShutDown(). Anyways here's the callback:",rscript.Name),debug.info(1, 'l'),script.Name)
+				
+				debuglog:debuglog(string.format("Callback: %s",err),debug.info(1, 'l'),script.Name)
+			end
+			
+		end
+
+	end
+end
