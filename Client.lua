@@ -97,7 +97,10 @@ for _,rscript in pairs(script.scripts:GetChildren()) do
 		end
 		FrameWork:WriteConfig("CurrentLoadingScript",rscript.Name)
 		debuglog:debuglog("running script "..rscript.Name,debug.info(1, 'l'),script.Name)
+		local ScriptStartupTime = os.clock()
 		require(rscript)
+		local ScriptLoadTime = tostring(string.format("%.2f", (os.clock() - ScriptStartupTime) * 1000))
+		debuglog:debuglog(string.format("Script %s took %sMS to startup.", rscript.Name, tostring(ScriptLoadTime)))
 		--rscript.Parent = LoadedScriptsLocation
 		if AllowDebugScripts then
 			DebugClient:ScriptLoaded(rscript.Name,rscript:GetFullName())
