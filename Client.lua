@@ -126,8 +126,9 @@ task.defer(function()
 end)
 
 
-local loadtime = tostring(string.format("%.2f", (os.clock() - BeginLoadTime) * 1000))
 
+local loadtime = tostring(string.format("%.2f", (os.clock() - BeginLoadTime) * 1000))
+debuglog:log(string.format("Finish client startup. Took %s MS",loadtime),debug.info(1, 'l'),script.Name)
 
 local sortedScripts = {}
 
@@ -144,7 +145,7 @@ for _, scriptData in ipairs(sortedScripts) do
 	debuglog:debuglog(string.format("| Script '%s' took %s MS to start up", scriptData.Name, scriptData.Time),debug.info(1, 'l'),script.Name)
 end
 debuglog:debuglog(string.format("-----------------------SCRIPT_TIMINGS_END-----------------------"),debug.info(1, 'l'),script.Name)
-debuglog:log(string.format("Finish client startup. Took %s MS",loadtime),debug.info(1, 'l'),script.Name)
+
 
 game.ReplicatedStorage.Events.Client.ClientfinishInit:FireServer(FrameWork:GetLoaderGithash(),loadtime)
 
