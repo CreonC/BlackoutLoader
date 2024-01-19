@@ -27,9 +27,7 @@ SOFTWARE.
 
 print("BlackoutLoader_Client v1.2, git hash "..script.ClientGithash.Value)
 
-
 local AllowDebugScripts = false
-
 
 local ProjectConfiguration = game.ReplicatedFirst:WaitForChild("ProjectConfiguration")
 
@@ -40,8 +38,6 @@ local FrameWork = require(script.BlackoutFramework)
 local ScriptStartupTimes = {}
 
 FrameWork:WriteConfig("DoneInit",false)
-
-
 
 if not ProjectConfiguration then
 	warn(debug.traceback("Traceback:"))
@@ -64,10 +60,12 @@ if CurrentRelease == "debug" and not RunService:IsStudio() then --who wants a de
 end
 
 FrameWork:WriteConfig("CurrentRelease",CurrentRelease)
-
 FrameWork:WriteConfig("DoneInit",true)
 
 local debuglog = require(script.modules.debuglog)
+local LoadedScriptsLocation = Instance.new("Folder",script)
+LoadedScriptsLocation.Name = "Runtime"
+local DebugClient
 
 task.defer(function()
 	local DebugVersionInfo = game.Players.LocalPlayer.PlayerGui:WaitForChild("Main"):WaitForChild("DebugVersionInfo")
@@ -85,13 +83,6 @@ task.defer(function()
 	DebugVersionInfo.Text = string.format("build%s-%s-client-%s %s",game.PlaceVersion,CurrentRelease,FrameWork:GetLoaderGithash(),isInternalText)
 
 end)
-
-
-
-local LoadedScriptsLocation = Instance.new("Folder",script)
-LoadedScriptsLocation.Name = "Runtime"
-
-local DebugClient
 
 if AllowDebugScripts then
 	debuglog:debuglog("Allowing debug scripts to run",debug.info(1, 'l'),script.Name)
