@@ -2,7 +2,7 @@
 print("BlackoutLoader_Client v1.1, git hash "..script.ClientGithash.Value)
 
 
-local AllowDebugScripts
+local AllowDebugScripts = false
 
 
 local ProjectConfiguration = game.ReplicatedFirst:WaitForChild("ProjectConfiguration")
@@ -27,6 +27,7 @@ if CurrentRelease == "debug" then
 	AllowDebugScripts = true
 elseif CurrentRelease == "prod" then
 	print("[BlackoutLoader]: prod")
+	AllowDebugScripts = false
 else
 	error("[BlackoutLoader]: CurrentRelease string is invaild. Not loading game")
 end
@@ -114,18 +115,20 @@ end
 debug.profileend()
 FrameWork:WriteConfig("AreScriptsDoneLoading",true)
 
-task.defer(function()
-	for _,rscript in pairs(script.scripts_debug:GetChildren()) do
+if CurrentRelease == "debug" then
+	
+	task.defer(function()
+		for _,rscript in pairs(script.scripts_debug:GetChildren()) do
 
-		if rscript:IsA("ModuleScript") and AllowDebugScripts then
+			if rscript:IsA("ModuleScript") and AllowDebugScripts then
+				debuglog:debuglog("running debugscript "..rscript.Name,debug.info(1, 'l'),script.Name)
+				require(rscript)
+				rscript.Parent = LoadedScriptsLocation
+			end
 
-			debuglog:debuglog("running debugscript "..rscript.Name,debug.info(1, 'l'),script.Name)
-			require(rscript)
-			rscript.Parent = LoadedScriptsLocation
 		end
-
-	end
-end)
+	end)
+end
 
 
 
