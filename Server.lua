@@ -24,7 +24,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ]]
-print("BlackoutLoader_Server v1.1, git hash "..script.ServergitHash.Value)
+print("BlackoutLoader_Server v1.2, git hash "..script.ServergitHash.Value)
 
 local ScriptStartupTimes = {}
 

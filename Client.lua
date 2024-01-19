@@ -25,7 +25,7 @@ SOFTWARE.
 
 ]]
 
-print("BlackoutLoader_Client v1.1, git hash "..script.ClientGithash.Value)
+print("BlackoutLoader_Client v1.2, git hash "..script.ClientGithash.Value)
 
 
 local AllowDebugScripts = false
