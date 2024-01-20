@@ -24,6 +24,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ]]
+script.Parent:RemoveDefaultLoadingScreen()
 
 print("BlackoutLoader_Client v1.2, git hash "..script.ClientGithash.Value)
 
