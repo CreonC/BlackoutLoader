@@ -29,6 +29,7 @@ local HttpService = game:GetService("HttpService")
 local UpstreamCommits = HttpService:JSONDecode(HttpService:GetAsync("https://api.github.com/repos/CreonC/BlackoutLoader/commits",false))
 local commitToClone = UpstreamCommits[1]
 local Lastestcommits = HttpService:JSONDecode(HttpService:GetAsync("https://api.github.com/repos/CreonC/BlackoutLoader/commits/"..tostring(commitToClone.sha),false))
+local ScriptEditorService = game:GetService("ScriptEditorService")
 
 print(string.format("Got lastest commit sha: %s",string.sub(tostring(Lastestcommits.sha), 1, 7)))
 
@@ -45,12 +46,19 @@ if OldClientLoader.ClientGithash.Value == string.sub(tostring(Lastestcommits.sha
 else
 	print("Writing script.source Now")
 
-	if OldClientLoader.Source == ClientLoaderFile2 then
+	--[[if OldClientLoader.Source == ClientLoaderFile2 then
 		warn("ClientLoader source is the same as the new one, no changes.")
 	else
 		OldClientLoader.Source = ClientLoaderFile2
-	end
+	end]]
 
+	if ScriptEditorService:GetEditorSource(OldClientLoader) == ClientLoaderFile2 then
+		warn("ClientLoader source is the same as the new one, no changes.")
+	else
+		ScriptEditorService:UpdateSourceAsync(OldClientLoader,function()
+			return ClientLoaderFile2
+		end)
+	end
 
 	print("Done, Writting hash now")
 	OldClientLoader.ClientGithash.Value = string.sub(tostring(Lastestcommits.sha), 1, 7)
@@ -68,10 +76,18 @@ if OldServerLoader.ServergitHash.Value == string.sub(tostring(Lastestcommits.sha
 else
 	print("Writing script.source Now")
 
-	if OldServerLoader.Source == ServerLoaderFile2 then
+	--[[if OldServerLoader.Source == ServerLoaderFile2 then
 		warn("ServerLoader source is the same as the new one, no changes.")
 	else
 		OldServerLoader.Source = ServerLoaderFile2
+	end]]
+
+	if ScriptEditorService:GetEditorSource(OldServerLoader) == ServerLoaderFile2 then
+		warn("ClientLoader source is the same as the new one, no changes.")
+	else
+		ScriptEditorService:UpdateSourceAsync(OldServerLoader,function()
+			return ServerLoaderFile2
+		end)
 	end
 
 	print("Done, Writting hash now")
